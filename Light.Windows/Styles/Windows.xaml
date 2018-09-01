@@ -1,0 +1,101 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					xmlns:local="clr-namespace:Light.Windows"
+					xmlns:vc="clr-namespace:Light.Windows.ValueConverters"
+					xmlns:vm="clr-namespace:Light.Core.ViewModels;assembly=Light.Core"
+                    mc:Ignorable="d">
+
+	<Style x:Key="MainWindowStyle"
+		   TargetType="{x:Type local:MainWindow}">
+
+		<d:Style.DataContext>
+			<x:Type Type="vm:WindowViewModel"/>
+		</d:Style.DataContext>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Window}">
+
+					<!-- Main Window outline -->
+					<Grid Background="{StaticResource BackgroundMainBrush}">
+
+						<Grid.RowDefinitions>
+
+							<!-- Title Bar -->
+							<RowDefinition Height="{Binding TitleHeight, Converter={vc:DoubleToGridLengthConverter}, FallbackValue=42}" />
+
+							<!-- Window Content -->
+							<RowDefinition Height="*" />
+
+						</Grid.RowDefinitions>
+
+						<!-- Title Bar -->
+						<Grid Grid.Column="0"
+							  ZIndex="1"
+							  Background="{StaticResource BackgroundDarkBrush}">
+
+							<Grid.ColumnDefinitions>
+
+								<!-- Icon -->
+								<ColumnDefinition Width="Auto" />
+
+								<!-- Title -->
+								<ColumnDefinition Width="*" />
+
+								<!-- Window Buttons -->
+								<ColumnDefinition Width="Auto" />
+
+							</Grid.ColumnDefinitions>
+
+							<!-- Icon -->
+							<Button Command="{Binding ShowSystemMenuCommand}"
+									CommandParameter="{Binding ElementName=AppWindow}"
+									Style="{StaticResource SystemIconButton}">
+								<Image Source="{TemplateBinding Icon}" />
+							</Button>
+
+							<!-- Title -->
+							<Viewbox Grid.Column="1"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Center">
+								<TextBlock Style="{StaticResource TitleTextBlock}"
+										   Text="{TemplateBinding Title}" />
+							</Viewbox>
+
+							<!-- Window Buttons -->
+							<StackPanel Grid.Column="2"
+										Orientation="Horizontal">
+
+								<Button Command="{Binding MinimizeCommand}"
+										CommandParameter="{Binding ElementName=AppWindow}"
+										Content="_"
+										Style="{StaticResource WindowControlButton}" />
+								<Button Command="{Binding MaximizeOrRestoreCommand}"
+										CommandParameter="{Binding ElementName=AppWindow}"
+										Content="[ ]"
+										Style="{StaticResource WindowControlButton}" />
+								<Button Command="{Binding CloseCommand}"
+										CommandParameter="{Binding ElementName=AppWindow}"
+										Content="X"
+										Style="{StaticResource WindowCloseButton}" />
+
+							</StackPanel>
+
+						</Grid>
+
+						<!-- Window Content -->
+						<Border Grid.Row="1"
+								Padding="{Binding InnerContentPadding, Converter={vc:DoubleToThicknessConverter}}">
+							<ContentPresenter />
+						</Border>
+
+					</Grid>
+
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

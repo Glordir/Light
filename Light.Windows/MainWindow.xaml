@@ -1,12 +1,35 @@
 ﻿<Window x:Class="Light.Windows.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Light.Windows"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:Light.Windows"
+		xmlns:vc="clr-namespace:Light.Windows.ValueConverters"
+		xmlns:vm="clr-namespace:Light.Core.ViewModels;assembly=Light.Core"
+		mc:Ignorable="d"
+		x:Name="AppWindow"
+		Height="450"
+		Icon="Images/Logo/logo_128x128.png"
+		MinHeight="{Binding WindowMinimumHeight}"
+		MinWidth="{Binding WindowMinimumWidth}"
+		Style="{StaticResource MainWindowStyle}"
+		Title="Light"
+		UseLayoutRounding="True"
+		Width="800"
+		WindowStyle="None">
+
+	<Window.DataContext>
+		<vm:WindowViewModel />
+	</Window.DataContext>
+
+	<WindowChrome.WindowChrome>
+		<WindowChrome CaptionHeight="{Binding WindowChromeTitleHeight}"
+					  CornerRadius="0"
+					  GlassFrameThickness="0"
+					  ResizeBorderThickness="{Binding ResizeBorder, Converter={vc:DoubleToThicknessConverter}}" />
+	</WindowChrome.WindowChrome>
+
+	<Grid>
+		<Button Content="Testasetfd"></Button>
+	</Grid>
 </Window>
